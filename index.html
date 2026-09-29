@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes, viewport-fit=cover" />
+  <meta name="theme-color" content="#080b11" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+  <title>Lokesh Sandu — Automotive Software Integration & Validation Specialist</title>
+
+  <!-- SEO & Open Graph -->
+  <meta name="description"
+        content="Lokesh Sandu — Automotive Software Integration & Validation Engineer specializing in CAN architecture, ECU V&V, EV charging systems (ISO 15118), embedded firmware, and HIL test systems." />
+  <meta name="author" content="Lokesh Sandu" />
+  <meta name="keywords" content="Automotive Software Integration, ECU Validation, CAN Architecture, DBC, VCU, BMS, CCS2, ISO 15118, ISO 26262, CANoe, vTESTstudio, STM32, Embedded Systems, Electric Vehicles" />
+
+  <meta property="og:title" content="Lokesh Sandu — Automotive Software Integration & Validation Specialist" />
+  <meta property="og:description" content="CAN Architecture · ECU V&V · CCS2 / ISO 15118 · ISO 26262 · Embedded Firmware" />
+  <meta property="og:type" content="website" />
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/svg+xml" href="resources/favicon.svg" />
+
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Bootstrap Grid -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+        crossorigin="anonymous" />
+
+  <!-- Custom Automotive Stylesheet -->
+  <link rel="stylesheet" href="style.css?v=2.1" />
+</head>
+
+<body>
+
+  <!-- Background CAN Bus Oscilloscope Waveform Simulation -->
+  <!-- Background CAN Bus Oscilloscope Waveform Simulation -->
+<canvas id="canWaveformCanvas"></canvas>
+
+<!-- Background: Circuit traces + data packet flow -->
+<canvas id="circuitCanvas"></canvas>
+
+  <!-- Cockpit Navigation Bar -->
+  <header class="cockpit-nav">
+    <div class="container d-flex align-items-center justify-content-between py-3">
+      <div class="brand-wrapper">
+        <div class="brand-monogram">LS</div>
+        <div class="brand-text">
+          <span class="brand-name">Lokesh Sandu</span>
+          <span class="brand-badge">Automotive Software Integration</span>
+        </div>
+      </div>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="nav-links-desktop" id="navDrawer" aria-label="Primary Navigation">
+        <a href="#about">About</a>
+        <a href="#experience">Experience</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+        <a href="resources/Lokesh_Sandu_Resume.pdf" download class="btn-resume-nav">
+          <i class="fas fa-file-download"></i> RESUME
+        </a>
+      </nav>
+
+      <!-- Mobile Nav Trigger -->
+      <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ========================================================
+         HERO SECTION: THE COCKPIT
+         ======================================================== -->
+    <section class="hero-cockpit container-fluid" id="hero">
+      <div class="container">
+        <div class="row align-items-center">
+          
+          <!-- Left Column: Identity & Proposition -->
+          <div class="col-lg-7">
+
+
+            <h1 class="hero-title">
+              Lokesh <span class="highlight">Sandu</span>
+            </h1>
+
+            <div class="hero-subtitle-box">
+              <span class="text-secondary">&gt;</span> <span id="typingTarget"></span><span class="typing-cursor"></span>
+            </div>
+
+            <p class="hero-desc">
+              Automotive integration engineer specializing in vehicle-level CAN communication architecture, multi-ECU validation (VCU, BMS, MCU, BLE), and CCS2 DC fast-charging systems. Experienced in bridging low-level embedded motor-control firmware with full-vehicle verification, HIL test infrastructure, and ISO 26262 functional safety.
+            </p>
+
+            <div class="hero-telemetry-tags">
+              <span class="ecu-chip"><i class="fas fa-network-wired text-primary me-1"></i> CAN Architecture</span>
+              <span class="ecu-chip"><i class="fas fa-microchip text-primary me-1"></i> VCU · BMS · BLE</span>
+              <span class="ecu-chip"><i class="fas fa-bolt text-warning me-1"></i> CCS2 / ISO 15118</span>
+              <span class="ecu-chip"><i class="fas fa-shield-alt text-success me-1"></i> ISO 26262 ASIL-B</span>
+              <span class="ecu-chip"><i class="fas fa-vial text-primary me-1"></i> CANoe / vTESTstudio</span>
+              <span class="ecu-chip"><i class="fas fa-desktop text-secondary me-1"></i> HIL Test Benches</span>
+            </div>
+
+            <div class="hero-cta-group">
+              <a href="https://www.linkedin.com/in/lokesh-sandu-3ba5b5244/" target="_blank" rel="noopener" class="btn-automotive-secondary" aria-label="LinkedIn">
+                <i class="fab fa-linkedin"></i>
+              </a>
+              <a href="https://github.com/lokeshsandu" target="_blank" rel="noopener" class="btn-automotive-secondary" aria-label="GitHub">
+                <i class="fab fa-github"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Right Column: HUD Profile Diagnostic Visualizer -->
+          <div class="col-lg-5 text-center mt-5 mt-lg-0">
+            <div class="avatar-unit">
+              <div class="avatar-frame">
+                <span class="avatar-hud-overlay"><i class="fas fa-check-circle me-1"></i> ECU_VALIDATED</span>
+                <img src="resources/profile.svg" alt="Lokesh Sandu — Automotive Software Integration Engineer" loading="lazy" />
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+
+      </div>
+    </section>
+
+
+    <!-- ========================================================
+         DOMAINS & ARCHITECTURE (ABOUT SECTION)
+         ======================================================== -->
+    <section class="container py-5" id="about">
+      <div class="section-title-wrap reveal-on-scroll">
+        <span class="section-pretitle">// ARCHITECTURAL EXPERTISE</span>
+        <h2 class="section-title">Core Engineering Domains</h2>
+      </div>
+
+      <div class="about-cockpit-card technical-corners reveal-on-scroll">
+        <p class="about-summary-lead">
+          From formulating low-level BLDC motor-control firmware to architecting master vehicle CAN networks and leading multi-ECU validation setups — I engineer cohesive, safety-critical vehicle software ecosystems.
+        </p>
+
+        <div class="domain-pillars-grid reveal-stagger">
+
+          <div class="pillar-box reveal-on-scroll">
+            <div class="pillar-header">
+              <i class="fas fa-network-wired"></i>
+              <h4>Vehicle Communication & CAN Architecture</h4>
+            </div>
+            <p class="pillar-details">
+              End-to-end ownership of Master CAN Matrix, supplier matrix consolidation, signal & message ID allocation, CRC/checksum/rolling counters, timeout monitoring, bus-load analysis, and production DBC file releases.
+            </p>
+          </div>
+
+          <div class="pillar-box reveal-on-scroll">
+            <div class="pillar-header">
+              <i class="fas fa-vial"></i>
+              <h4>Multi-ECU System Integration & Validation</h4>
+            </div>
+            <p class="pillar-details">
+              Ownership of VCU, BMS and BLE test planning, bench test rig build-out, battery-emulation test setups, ~350+ automated/manual test cases, fault-injection testing, and cross-functional defect lifecycle management.
+            </p>
+          </div>
+
+          <div class="pillar-box reveal-on-scroll">
+            <div class="pillar-header">
+              <i class="fas fa-bolt"></i>
+              <h4>EV Charging & HV/LV Power Management</h4>
+            </div>
+            <p class="pillar-details">
+              Validation of CCS2 DC fast-charging under IEC 61851 & ISO 15118 (EVCC/EVSE state machine, CP/PP, E-Lock, pre-charge, active discharge), insulation monitoring (IMD), vacuum pump, and thermal protection.
+            </p>
+          </div>
+
+          <div class="pillar-box reveal-on-scroll">
+            <div class="pillar-header">
+              <i class="fas fa-shield-alt"></i>
+              <h4>Functional Safety & Diagnostics (ISO 26262 / UDS)</h4>
+            </div>
+            <p class="pillar-details">
+              Safety engineering contribution (HARA, DFMEA, FTA, ASIL-B safety mechanisms), full UDS diagnostics validation (DIDs, DTCs, freeze frames, routines), and EMI/EMC automotive regulatory testing support.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================================
+         EXPERIENCE TIMELINE: THE VERIFICATION TRACK
+         ======================================================== -->
+    <section class="container py-5" id="experience">
+      <div class="section-title-wrap reveal-on-scroll">
+        <span class="section-pretitle">// CAREER PROGRESSION & MILESTONES</span>
+        <h2 class="section-title">The Engineering Verification Track</h2>
+      </div>
+
+      <div class="experience-track">
+
+        <!-- Role 1: Moonrider.ai Assistant Manager -->
+        <article class="ecu-role-card technical-corners reveal-on-scroll">
+          <div class="role-header-top">
+            <div class="company-title-group">
+              <h3>Moonrider.ai</h3>
+              <div class="role-designation">Assistant Manager — Software Integration & Validation</div>
+              <div class="role-meta">
+                <span><i class="fas fa-map-marker-alt"></i> India</span>
+                <span><i class="fas fa-check-double text-success"></i> Integration Leadership</span>
+              </div>
+            </div>
+            <div class="role-period-badge">Present</div>
+          </div>
+
+          <ul class="engineering-bullets">
+            <li>Leading VCU, BMS and BLE software integration & validation, owning test planning, execution, defect management, and release-level verification.</li>
+            <li>Built complete VCU validation infrastructure from the ground up, including bench test rigs and battery-emulation setups for repeatable pre-vehicle testing.</li>
+            <li>Developed and executed ~350 system and functional test cases across VCU, BMS and BLE programs with requirements traceability and status tracking.</li>
+            <li>Established defect-tracking and test management processes, driving the complete issue lifecycle from identification through cross-functional resolution and closure.</li>
+            <li>Automated test reporting, validation-status tracking, and defect workflows using n8n workflow tooling, boosting reporting efficiency across software teams.</li>
+            <li>Driving EMI/EMC validation activities for vehicle electronics, supporting test execution, failure investigations, and corrective action implementations.</li>
+            <li>Continuing vehicle CAN integration activities — requirements updates, DBC/signal management, bus-load analysis, and vehicle-level communication resolution.</li>
+          </ul>
+
+          <div class="role-tech-tray">
+            <span class="tech-spec-pill">VCU Integration</span>
+            <span class="tech-spec-pill">BMS Emulation</span>
+            <span class="tech-spec-pill">BLE</span>
+            <span class="tech-spec-pill">CAN Bus</span>
+            <span class="tech-spec-pill">DBC Management</span>
+            <span class="tech-spec-pill">Test Automation</span>
+            <span class="tech-spec-pill">EMI/EMC</span>
+            <span class="tech-spec-pill">n8n</span>
+          </div>
+        </article>
+
+        <!-- Role 2: Moonrider.ai Senior Engineer -->
+        <article class="ecu-role-card technical-corners reveal-on-scroll">
+          <div class="role-header-top">
+            <div class="company-title-group">
+              <h3>Moonrider.ai</h3>
+              <div class="role-designation">Senior Engineer — Software Integration</div>
+              <div class="role-meta">
+                <span><i class="fas fa-map-marker-alt"></i> India</span>
+                <span><i class="fas fa-code-branch text-primary"></i> Architecture & HIL</span>
+              </div>
+            </div>
+            <div class="role-period-badge">Previous Role</div>
+          </div>
+
+          <ul class="engineering-bullets">
+            <li>Owned vehicle CAN architecture activities across vehicle variants — consolidated supplier matrices into a single Master CAN Matrix, managed signal/ID allocation, and released DBC files.</li>
+            <li>Defined CAN communication requirements including message IDs, CRC/checksum, rolling counter, timeout, and continuous communication monitoring.</li>
+            <li>Performed CAN bus-load analysis and resolved vehicle-level communication defects identified during integration and validation phases.</li>
+            <li>Translated system requirements into CAN specifications and supplier interface requirements, coordinating signal changes across integration milestones.</li>
+            <li>Defined HIL requirements and system interfaces for ECU validation; evaluated technical proposals and integration feasibility from HIL platform suppliers.</li>
+            <li>Led development of an EV energy-audit data acquisition platform covering sensor instrumentation, edge data logging, and cloud telemetry pipeline for system-level energy analysis.</li>
+          </ul>
+
+          <div class="role-tech-tray">
+            <span class="tech-spec-pill">CAN Architecture</span>
+            <span class="tech-spec-pill">Master CAN Matrix</span>
+            <span class="tech-spec-pill">Bus-Load Optimization</span>
+            <span class="tech-spec-pill">HIL Planning</span>
+            <span class="tech-spec-pill">IoT Telemetry</span>
+            <span class="tech-spec-pill">MQTT</span>
+            <span class="tech-spec-pill">Energy Audit</span>
+          </div>
+        </article>
+
+        <!-- Role 3: Qucev Engineer -->
+        <article class="ecu-role-card technical-corners reveal-on-scroll">
+          <div class="role-header-top">
+            <div class="company-title-group">
+              <h3>Qucev</h3>
+              <div class="role-designation">Engineer — System Integration</div>
+              <div class="role-meta">
+                <span><i class="fas fa-map-marker-alt"></i> India</span>
+                <span><i class="fas fa-charging-station text-warning"></i> CCS2 / ISO 15118</span>
+              </div>
+            </div>
+            <div class="role-period-badge">Previous</div>
+          </div>
+
+          <ul class="engineering-bullets">
+            <li>Led VCU system integration & validation for an electric commercial vehicle program across VCU, BMS, MCU, and charging subsystems.</li>
+            <li>Validated CCS2 DC charging based on IEC 61851 & ISO 15118, covering EVCC/EVSE communication sequences, CP/PP states, E-Lock, pre-charge, active discharge, and fault handling.</li>
+            <li>Engineered and validated CAN communication, DBC signals, DIDs/DTCs, routines, freeze frames, and diagnostic parameters using Vector CANoe, CANalyzer, and Vehicle Spy.</li>
+            <li>Developed requirement-based test cases and automated validation with CANoe/vTESTstudio covering functional, negative, boundary, and fault-injection scenarios.</li>
+            <li>Performed system-level debugging and root-cause analysis using CAN traces, INCA/A2L, PicoScope oscilloscopes, and ECU calibration logs.</li>
+            <li>Contributed to ISO 26262-oriented HARA, DFMEA, FTA, and safety validation for ASIL-B VCU dependencies and vehicle safety mechanisms.</li>
+            <li>Developed an After-Sales Issue Management Portal to track customer/service-center defects and route cases to engineering teams for root-cause closure.</li>
+          </ul>
+
+          <div class="role-tech-tray">
+            <span class="tech-spec-pill">Vector CANoe</span>
+            <span class="tech-spec-pill">vTESTstudio</span>
+            <span class="tech-spec-pill">ISO 15118</span>
+            <span class="tech-spec-pill">IEC 61851</span>
+            <span class="tech-spec-pill">CCS2</span>
+            <span class="tech-spec-pill">ISO 26262 (ASIL-B)</span>
+            <span class="tech-spec-pill">UDS Diagnostics</span>
+            <span class="tech-spec-pill">INCA / A2L</span>
+            <span class="tech-spec-pill">PicoScope</span>
+          </div>
+        </article>
+
+        <!-- Role 4: CLN Energy GET -->
+        <article class="ecu-role-card technical-corners reveal-on-scroll">
+          <div class="role-header-top">
+            <div class="company-title-group">
+              <h3>CLN Energy <span style="font-size:0.85rem; color:var(--text-tertiary); font-weight:normal;">(Formerly JLNPhenix Energy)</span></h3>
+              <div class="role-designation">Graduate Engineering Trainee — Embedded Firmware</div>
+              <div class="role-meta">
+                <span><i class="fas fa-map-marker-alt"></i> Hyderabad, India</span>
+                <span><i class="fas fa-microchip text-primary"></i> Motor Control & Firmware</span>
+              </div>
+            </div>
+            <div class="role-period-badge">May 2023 – Nov 2023</div>
+          </div>
+
+          <ul class="engineering-bullets">
+            <li>Developed & validated embedded firmware for a 3.3 kW-class BLDC motor-control unit using STM32G431.</li>
+            <li>Integrated Field Oriented Control (FOC) using ST MCSDK with PID tuning, torque/speed control, and control-parameter calibration.</li>
+            <li>Integrated and validated CAN communication, accelerator input processing, and Drive / Cruise / Sports operating modes.</li>
+            <li>Implemented and validated critical protection routines: OCP, OTP, thermal derating, fault handling, pre-charge, and active-discharge functions.</li>
+            <li>Performed dyno-based validation across speed, torque, current, and thermal conditions to verify motor-control performance.</li>
+            <li>Conducted root-cause analysis by correlating CAN signals, ADC feedback, current/torque response, and thermal behavior during test runs.</li>
+          </ul>
+
+          <div class="role-tech-tray">
+            <span class="tech-spec-pill">STM32G431</span>
+            <span class="tech-spec-pill">FOC Motor Control</span>
+            <span class="tech-spec-pill">ST MCSDK</span>
+            <span class="tech-spec-pill">PID Tuning</span>
+            <span class="tech-spec-pill">CAN Bus</span>
+            <span class="tech-spec-pill">Dyno Testing</span>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+
+    <!-- ========================================================
+         ACADEMIC FOUNDATION & EDUCATION
+         ======================================================== -->
+    <section class="container py-5" id="education">
+      <div class="section-title-wrap reveal-on-scroll">
+        <span class="section-pretitle">// ACADEMIC FOUNDATION</span>
+        <h2 class="section-title">Education &amp; Qualifications</h2>
+      </div>
+
+      <div class="education-grid">
+
+        <!-- Degree 1: MTech at BITS Pilani WILP -->
+        <article class="education-card technical-corners reveal-on-scroll">
+          <div>
+            <div class="education-header">
+              <div class="education-logo-wrap">
+                <img src="resources/bits_pilani_logo.png" alt="BITS Pilani WILP Logo" class="college-logo" />
+                <span class="education-status-tag active"><span class="ticker-dot me-1"></span> In Progress</span>
+              </div>
+              <span class="education-period"><i class="far fa-calendar-alt me-1"></i> Jan 2026 – Dec 2027</span>
+            </div>
+
+            <h3 class="education-degree">
+              Master of Technology (M.Tech) — Automotive Electronics
+            </h3>
+
+            <div class="education-institution">
+              <i class="fas fa-university"></i> BITS Pilani Work Integrated Learning Programmes (WILP)
+            </div>
+
+            <p class="education-highlights">
+              Specialized master's program focusing on advanced automotive embedded systems, electronic control units (ECU architecture), in-vehicle networking, powertrain electronics, and safety-critical automotive software design.
+            </p>
+          </div>
+
+          <div class="education-tags">
+            <span class="spec-badge">Automotive Electronics</span>
+            <span class="spec-badge">ECU Architecture</span>
+            <span class="spec-badge">Vehicle Networks</span>
+            <span class="spec-badge">EV Powertrain</span>
+            <span class="spec-badge">Safety-Critical SW</span>
+          </div>
+        </article>
+
+        <!-- Degree 2: BTech at SNIST -->
+        <article class="education-card technical-corners reveal-on-scroll">
+          <div>
+            <div class="education-header">
+              <div class="education-logo-wrap">
+                <img src="resources/snist_logo.png" alt="SNIST Logo" class="college-logo" />
+                <span class="education-status-tag completed"><i class="fas fa-check-circle me-1"></i> Graduated</span>
+              </div>
+              <span class="education-period"><i class="far fa-calendar-alt me-1"></i> Aug 2019 – Aug 2023</span>
+            </div>
+
+            <h3 class="education-degree">
+              Bachelor of Technology (B.Tech) — Electrical &amp; Electronics Engineering
+            </h3>
+
+            <div class="education-institution">
+              <i class="fas fa-graduation-cap"></i> Sreenidhi Institute of Science and Technology (SNIST)
+            </div>
+
+            <p class="education-highlights">
+              Rigorous foundation in electrical machines, power electronics, electric drives, microcontrollers, control systems theory, instrumentation, and analog/digital embedded hardware.
+            </p>
+          </div>
+
+          <div class="education-tags">
+            <span class="spec-badge">Electrical &amp; Electronics</span>
+            <span class="spec-badge">Power Electronics</span>
+            <span class="spec-badge">Electric Drives</span>
+            <span class="spec-badge">Microcontrollers</span>
+            <span class="spec-badge">Control Systems</span>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+
+    <!-- ========================================================
+         TECHNICAL COMPETENCIES (SKILLS MODULE)
+         ======================================================== -->
+    <section class="container py-5" id="skills">
+      <div class="section-title-wrap reveal-on-scroll">
+        <span class="section-pretitle">// DIAGNOSTIC MATRICES</span>
+        <h2 class="section-title">Technical Competencies</h2>
+      </div>
+
+      <div class="skills-module-grid reveal-stagger">
+
+        <!-- Module 1: Vehicle Networking -->
+        <div class="skill-module technical-corners reveal-on-scroll">
+          <div class="module-icon-wrap">
+            <i class="fas fa-network-wired"></i>
+          </div>
+          <h3>Vehicle Networking & In-Vehicle Networks</h3>
+          <ul class="skill-module-list">
+            <li>CAN 2.0A/B &amp; CAN-FD Architectures</li>
+            <li>Master DBC File Management &amp; Release</li>
+            <li>Signal &amp; Message ID Allocation</li>
+            <li>Bus-Load Analysis &amp; Traffic Optimization</li>
+            <li>Rolling Counter &amp; CRC Checksum Strategies</li>
+            <li>Communication Timeout &amp; Bus-Off Recovery</li>
+          </ul>
+        </div>
+
+        <!-- Module 2: Testing & Tooling -->
+        <div class="skill-module technical-corners reveal-on-scroll">
+          <div class="module-icon-wrap">
+            <i class="fas fa-toolbox"></i>
+          </div>
+          <h3>Validation &amp; Diagnostic Tooling</h3>
+          <ul class="skill-module-list">
+            <li>Vector CANoe &amp; CANalyzer</li>
+            <li>Vector vTESTstudio (Automated Testing)</li>
+            <li>Intrepid Vehicle Spy</li>
+            <li>ETAS INCA / A2L Calibration</li>
+            <li>PicoScope Hardware Oscilloscope</li>
+            <li>Bench Test Rigs &amp; BMS Battery Emulators</li>
+          </ul>
+        </div>
+
+        <!-- Module 3: Charging & Power -->
+        <div class="skill-module technical-corners reveal-on-scroll">
+          <div class="module-icon-wrap">
+            <i class="fas fa-charging-station"></i>
+          </div>
+          <h3>EV Fast Charging &amp; Power Systems</h3>
+          <ul class="skill-module-list">
+            <li>CCS2 DC Fast Charging Integration</li>
+            <li>ISO 15118 &amp; IEC 61851 Compliance</li>
+            <li>EVCC to EVSE Communication Sequencing</li>
+            <li>CP / PP States &amp; Electronic Lock (E-Lock)</li>
+            <li>Pre-charge, Active Discharge &amp; IMD</li>
+            <li>Thermal Derating &amp; HV Interlock (HVIL)</li>
+          </ul>
+        </div>
+
+        <!-- Module 4: Functional Safety & Diagnostics -->
+        <div class="skill-module technical-corners reveal-on-scroll">
+          <div class="module-icon-wrap">
+            <i class="fas fa-shield-virus"></i>
+          </div>
+          <h3>Functional Safety &amp; UDS Diagnostics</h3>
+          <ul class="skill-module-list">
+            <li>ISO 26262 (HARA, DFMEA, FTA)</li>
+            <li>ASIL-B Safety Mechanism Verification</li>
+            <li>UDS Diagnostics (ISO 14229)</li>
+            <li>DIDs, DTCs, Freeze Frames &amp; Routines</li>
+            <li>EMI/EMC Vehicle Electronics Compliance</li>
+            <li>Fail-Safe &amp; Fault-Tolerant Architectures</li>
+          </ul>
+        </div>
+
+        <!-- Module 5: Embedded Systems -->
+        <div class="skill-module technical-corners reveal-on-scroll">
+          <div class="module-icon-wrap">
+            <i class="fas fa-microchip"></i>
+          </div>
+          <h3>Embedded Firmware &amp; Microcontrollers</h3>
+          <ul class="skill-module-list">
+            <li>STM32 (G4 Series / ARM Cortex-M4)</li>
+            <li>ESP32 Edge Microcontrollers</li>
+            <li>C / Embedded C Development</li>
+            <li>FOC &amp; BLDC Motor Control Algorithms</li>
+            <li>ST MCSDK &amp; Motor Profiler</li>
+            <li>Dyno-based Motor Performance Validation</li>
+          </ul>
+        </div>
+
+        <!-- Module 6: Telemetry & Automation -->
+        <div class="skill-module technical-corners reveal-on-scroll">
+          <div class="module-icon-wrap">
+            <i class="fas fa-satellite-dish"></i>
+          </div>
+          <h3>Data Telemetry &amp; Workflow Automation</h3>
+          <ul class="skill-module-list">
+            <li>Edge Sensor Instrumentation &amp; Logging</li>
+            <li>MQTT Cloud Telemetry Pipeline</li>
+            <li>InfluxDB Time-Series Telemetry DB</li>
+            <li>Grafana Live Telemetry Dashboarding</li>
+            <li>n8n Test Reporting &amp; Defect Automation</li>
+            <li>After-Sales Engineering Incident Routing</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ========================================================
+         LICENSES & CERTIFICATIONS
+         ======================================================== -->
+    <section class="container py-5" id="certifications">
+      <div class="section-title-wrap reveal-on-scroll">
+        <span class="section-pretitle">// ACCREDITATIONS &amp; VERIFICATIONS</span>
+        <h2 class="section-title">Licenses &amp; Certifications</h2>
+      </div>
+
+      <div class="certifications-grid reveal-stagger">
+
+        <!-- Cert 1: MBSE -->
+        <article class="cert-card technical-corners reveal-on-scroll">
+          <div>
+            <div class="cert-header">
+              <span class="cert-issuer-badge"><i class="fas fa-university"></i> University at Buffalo</span>
+              <span class="cert-date"><i class="far fa-calendar-alt me-1"></i> Sep 2025</span>
+            </div>
+            <h3 class="cert-title">MBSE: Model-Based Systems Engineering</h3>
+            <div class="cert-org">
+              <i class="fas fa-graduation-cap"></i> Coursera / University at Buffalo
+            </div>
+            <div class="project-spec-stack m-0 mb-3">
+              <span class="spec-badge">Systems Engineering</span>
+              <span class="spec-badge">PLM</span>
+              <span class="spec-badge">IoT</span>
+            </div>
+          </div>
+          <a href="https://coursera.org/share/ef8ff71cbf74c505b623059dd28a5e20" target="_blank" rel="noopener" class="cert-link-btn">
+            <i class="fas fa-external-link-alt"></i> Show Credential
+          </a>
+        </article>
+
+        <!-- Cert 2: Battery Management Systems -->
+        <article class="cert-card technical-corners reveal-on-scroll">
+          <div>
+            <div class="cert-header">
+              <span class="cert-issuer-badge"><i class="fas fa-university"></i> Univ. of Colorado Boulder</span>
+              <span class="cert-date"><i class="far fa-calendar-alt me-1"></i> Aug 2025</span>
+            </div>
+            <h3 class="cert-title">Introduction to Battery-Management Systems</h3>
+            <div class="cert-org">
+              <i class="fas fa-car-battery"></i> Coursera / CU Boulder
+            </div>
+            <div class="project-spec-stack m-0 mb-3">
+              <span class="spec-badge">BMS Architecture</span>
+              <span class="spec-badge">Cell Modeling</span>
+              <span class="spec-badge">State Estimation</span>
+            </div>
+          </div>
+          <a href="https://coursera.org/share/47e8f2b5c21ffdc78189be76e2d14dcd" target="_blank" rel="noopener" class="cert-link-btn">
+            <i class="fas fa-external-link-alt"></i> Show Credential
+          </a>
+        </article>
+
+        <!-- Cert 3: Six Sigma -->
+        <article class="cert-card technical-corners reveal-on-scroll">
+          <div>
+            <div class="cert-header">
+              <span class="cert-issuer-badge"><i class="fas fa-university"></i> Kennesaw State University</span>
+              <span class="cert-date"><i class="far fa-calendar-alt me-1"></i> Aug 2025</span>
+            </div>
+            <h3 class="cert-title">Six Sigma Principles</h3>
+            <div class="cert-org">
+              <i class="fas fa-award"></i> Coursera / KSU
+            </div>
+            <div class="project-spec-stack m-0 mb-3">
+              <span class="spec-badge">Quality Management</span>
+              <span class="spec-badge">Process Control</span>
+              <span class="spec-badge">Root Cause Analysis</span>
+            </div>
+          </div>
+          <a href="https://coursera.org/verify/EGKEIFPCY2G7" target="_blank" rel="noopener" class="cert-link-btn">
+            <i class="fas fa-external-link-alt"></i> Show Credential
+          </a>
+        </article>
+
+        <!-- Cert 4: Jira SCRUM -->
+        <article class="cert-card technical-corners reveal-on-scroll">
+          <div>
+            <div class="cert-header">
+              <span class="cert-issuer-badge"><i class="fab fa-jira"></i> Coursera</span>
+              <span class="cert-date"><i class="far fa-calendar-alt me-1"></i> Aug 2025</span>
+            </div>
+            <h3 class="cert-title">How to Create a Jira SCRUM Project</h3>
+            <div class="cert-org">
+              <i class="fas fa-tasks"></i> Coursera Guided Projects
+            </div>
+            <div class="project-spec-stack m-0 mb-3">
+              <span class="spec-badge">Agile / SCRUM</span>
+              <span class="spec-badge">User Stories</span>
+              <span class="spec-badge">Dependency Analysis</span>
+            </div>
+          </div>
+          <a href="https://coursera.org/share/7090307ad2c576f6c043af57917c76d6" target="_blank" rel="noopener" class="cert-link-btn">
+            <i class="fas fa-external-link-alt"></i> Show Credential
+          </a>
+        </article>
+
+        <!-- Cert 5: AWS ML -->
+        <article class="cert-card technical-corners reveal-on-scroll">
+          <div>
+            <div class="cert-header">
+              <span class="cert-issuer-badge"><i class="fab fa-aws"></i> Amazon Web Services</span>
+              <span class="cert-date"><i class="far fa-calendar-alt me-1"></i> Nov 2022</span>
+            </div>
+            <h3 class="cert-title">AWS Academy Machine Learning Foundations</h3>
+            <div class="cert-org">
+              <i class="fas fa-brain"></i> AWS Academy / Credly
+            </div>
+            <div class="project-spec-stack m-0 mb-3">
+              <span class="spec-badge">Machine Learning</span>
+              <span class="spec-badge">AWS Cloud AI</span>
+              <span class="spec-badge">Model Pipelines</span>
+            </div>
+          </div>
+          <a href="https://www.credly.com/go/msJnx4HN" target="_blank" rel="noopener" class="cert-link-btn">
+            <i class="fas fa-external-link-alt"></i> Show Credential
+          </a>
+        </article>
+
+        <!-- Cert 6: AWS Cloud -->
+        <article class="cert-card technical-corners reveal-on-scroll">
+          <div>
+            <div class="cert-header">
+              <span class="cert-issuer-badge"><i class="fab fa-aws"></i> Amazon Web Services</span>
+              <span class="cert-date"><i class="far fa-calendar-alt me-1"></i> Oct 2022</span>
+            </div>
+            <h3 class="cert-title">AWS Academy Cloud Foundations</h3>
+            <div class="cert-org">
+              <i class="fas fa-cloud"></i> AWS Academy / Credly
+            </div>
+            <div class="project-spec-stack m-0 mb-3">
+              <span class="spec-badge">AWS Cloud Core</span>
+              <span class="spec-badge">Cloud Architecture</span>
+              <span class="spec-badge">Cloud Security</span>
+            </div>
+          </div>
+          <a href="https://www.credly.com/go/7Ezzm7SM" target="_blank" rel="noopener" class="cert-link-btn">
+            <i class="fas fa-external-link-alt"></i> Show Credential
+          </a>
+        </article>
+
+        <!-- Cert 7: Excel Data Analytics -->
+        <article class="cert-card technical-corners reveal-on-scroll">
+          <div>
+            <div class="cert-header">
+              <span class="cert-issuer-badge"><i class="fas fa-table"></i> Coursera</span>
+              <span class="cert-date"><i class="far fa-calendar-alt me-1"></i> Aug 2022</span>
+            </div>
+            <h3 class="cert-title">Excel Essentials for Data Analytics</h3>
+            <div class="cert-org">
+              <i class="fas fa-chart-line"></i> Coursera / Credly
+            </div>
+            <div class="project-spec-stack m-0 mb-3">
+              <span class="spec-badge">Data Analysis</span>
+              <span class="spec-badge">Statistical Modeling</span>
+              <span class="spec-badge">Telemetry Analysis</span>
+            </div>
+          </div>
+          <a href="https://www.credly.com/badges/28de622b-184c-4e80-a22d-5ded19c2a805" target="_blank" rel="noopener" class="cert-link-btn">
+            <i class="fas fa-external-link-alt"></i> Show Credential
+          </a>
+        </article>
+
+      </div>
+    </section>
+
+
+    <!-- ========================================================
+         ENGINEERING DEPLOYMENTS (KEY PROJECTS)
+         ======================================================== -->
+    <section class="container py-5" id="projects">
+      <div class="section-title-wrap reveal-on-scroll">
+        <span class="section-pretitle">// REAL-WORLD IMPLEMENTATIONS</span>
+        <h2 class="section-title">Key Engineering Deployments</h2>
+      </div>
+
+      <div class="projects-cockpit-grid reveal-stagger">
+
+        <!-- Deployment 1 -->
+        <div class="project-deployment-card technical-corners reveal-on-scroll">
+          <div>
+            <span class="project-category-tag">DATA PLATFORM &amp; TELEMETRY</span>
+            <h3>EV Energy-Audit &amp; Cloud Telemetry Platform</h3>
+            <p>
+              Architected and built an end-to-end data acquisition system for electric vehicle LV and HV subsystems. Designed edge data logger with multi-sensor instrumentation, local SD-card storage, and MQTT cloud telemetry pipe connected to InfluxDB and Grafana for system-level energy consumption auditing and optimization.
+            </p>
+          </div>
+          <div class="project-spec-stack">
+            <span class="spec-badge">ESP32</span>
+            <span class="spec-badge">MQTT</span>
+            <span class="spec-badge">HiveMQ</span>
+            <span class="spec-badge">InfluxDB</span>
+            <span class="spec-badge">Grafana</span>
+            <span class="spec-badge">Energy Audit</span>
+          </div>
+        </div>
+
+        <!-- Deployment 2 -->
+        <div class="project-deployment-card technical-corners reveal-on-scroll">
+          <div>
+            <span class="project-category-tag">TEST INFRASTRUCTURE</span>
+            <h3>In-House VCU Validation Bench &amp; Battery Emulation</h3>
+            <p>
+              Constructed complete bench validation infrastructure including physical test rigs and BMS battery-emulation setups. Designed and executed ~350 system test cases across VCU, BMS and BLE, enabling repeatable ECU-level verification and fault-injection prior to full vehicle integration.
+            </p>
+          </div>
+          <div class="project-spec-stack">
+            <span class="spec-badge">Bench Test Rigs</span>
+            <span class="spec-badge">BMS Emulation</span>
+            <span class="spec-badge">350+ Test Cases</span>
+            <span class="spec-badge">Fault Injection</span>
+            <span class="spec-badge">VCU / BMS</span>
+          </div>
+        </div>
+
+        <!-- Deployment 3 -->
+        <div class="project-deployment-card technical-corners reveal-on-scroll">
+          <div>
+            <span class="project-category-tag">CHARGING SYSTEMS</span>
+            <h3>CCS2 DC Fast Charging Verification (ISO 15118)</h3>
+            <p>
+              Executed complete validation of CCS2 DC fast-charging on commercial EV platforms. Verified EVCC/EVSE communication sequencing, CP/PP resistance states, electronic locking, pre-charge voltage matching, active discharge, and fail-safe disconnect routines under IEC 61851 and ISO 15118.
+            </p>
+          </div>
+          <div class="project-spec-stack">
+            <span class="spec-badge">CCS2</span>
+            <span class="spec-badge">ISO 15118</span>
+            <span class="spec-badge">IEC 61851</span>
+            <span class="spec-badge">Vector CANoe</span>
+            <span class="spec-badge">vTESTstudio</span>
+          </div>
+        </div>
+
+        <!-- Deployment 4 -->
+        <div class="project-deployment-card technical-corners reveal-on-scroll">
+          <div>
+            <span class="project-category-tag">SYSTEMS AUTOMATION</span>
+            <h3>Automated Test Reporting &amp; Defect Routing Pipeline</h3>
+            <p>
+              Automated validation reporting workflows and defect lifecycle tracking using n8n. Replaced manual status reporting with synchronized pipelines connecting test evidence, requirements traceability matrices, and defect investigation boards across software, systems, and after-sales engineering.
+            </p>
+          </div>
+          <div class="project-spec-stack">
+            <span class="spec-badge">n8n Automation</span>
+            <span class="spec-badge">Defect Lifecycle</span>
+            <span class="spec-badge">Traceability</span>
+            <span class="spec-badge">After-Sales Portal</span>
+          </div>
+        </div>
+
+        <!-- Deployment 5 -->
+        <div class="project-deployment-card technical-corners reveal-on-scroll">
+          <div>
+            <span class="project-category-tag">EMBEDDED MOTOR CONTROL</span>
+            <h3>3.3 kW BLDC Motor-Control Firmware &amp; Dyno Validation</h3>
+            <p>
+              Developed and dyno-validated embedded firmware for a 3.3 kW BLDC motor control unit on STM32G431. Integrated FOC using ST MCSDK, implemented Drive/Cruise/Sports modes, tuned PID loops, and programmed full protection suites (OCP, OTP, thermal derating, active discharge).
+            </p>
+          </div>
+          <div class="project-spec-stack">
+            <span class="spec-badge">STM32G431</span>
+            <span class="spec-badge">FOC / BLDC</span>
+            <span class="spec-badge">ST MCSDK</span>
+            <span class="spec-badge">PID Tuning</span>
+            <span class="spec-badge">Dyno Bench</span>
+          </div>
+        </div>
+
+        <!-- Deployment 6 -->
+        <div class="project-deployment-card technical-corners reveal-on-scroll">
+          <div>
+            <span class="project-category-tag">NETWORK ARCHITECTURE</span>
+            <h3>Master Vehicle CAN Matrix &amp; Bus-Load Optimization</h3>
+            <p>
+              Consolidated multiple supplier communication matrices into a single unified Master CAN Matrix. Managed ID allocation, signal routing, timeout monitoring, and rolling counter/CRC definitions across vehicle variants. Successfully resolved bus-off states and optimized bus-load during prototype builds.
+            </p>
+          </div>
+          <div class="project-spec-stack">
+            <span class="spec-badge">DBC Master</span>
+            <span class="spec-badge">Bus-Load Analysis</span>
+            <span class="spec-badge">CRC &amp; Checksum</span>
+            <span class="spec-badge">Vehicle Spy</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ========================================================
+         PUBLICATIONS & RESEARCH CONTRIBUTIONS
+         ======================================================== -->
+    <section class="container py-5" id="publications">
+      <div class="section-title-wrap reveal-on-scroll">
+        <span class="section-pretitle">// RESEARCH & TECHNICAL CONTRIBUTIONS</span>
+        <h2 class="section-title">Publications &amp; Papers</h2>
+      </div>
+
+      <div class="publications-container">
+        
+        <article class="publication-card technical-corners reveal-on-scroll">
+          <div class="publication-meta-top">
+            <span class="publication-badge"><i class="fas fa-book-open me-1"></i> Major Project &amp; Publication</span>
+            <span class="publication-date"><i class="far fa-calendar-alt me-1"></i> Feb 2023 – Jul 2023</span>
+          </div>
+
+          <h3 class="publication-title">
+            Enhanced DVR Control System Based on the Harris Hawks Optimization Algorithm
+          </h3>
+
+          <div class="publication-authors">
+            <i class="fas fa-user-edit me-1"></i> Lokesh Sandu
+          </div>
+
+          <p class="publication-abstract">
+            Major project focused on elevating DVR (Dynamic Voltage Restorer) performance using the Harris Hawks Optimization (HHO) technique. Meticulously compared outcomes with established PSO (Particle Swarm Optimization) and WOA (Whale Optimization Algorithm) methods, aiming to gauge the efficacy of these approaches in digital video processing optimization. The study demonstrates HHO's superior convergence and solution quality over conventional bio-inspired optimization methods.
+          </p>
+
+          <div class="publication-footer">
+            <div class="project-spec-stack m-0">
+              <span class="spec-badge">Harris Hawks Optimization</span>
+              <span class="spec-badge">DVR Control</span>
+              <span class="spec-badge">PSO &amp; WOA Comparison</span>
+              <span class="spec-badge">MATLAB</span>
+              <span class="spec-badge">C Programming</span>
+              <span class="spec-badge">Bio-Inspired Algorithms</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+
+    <!-- ========================================================
+         AWARDS & RECOGNITION
+         ======================================================== -->
+    <section class="container py-5" id="awards">
+      <div class="section-title-wrap reveal-on-scroll">
+        <span class="section-pretitle">// HONORS &amp; EXCELLENCE</span>
+        <h2 class="section-title">Awards &amp; Recognition</h2>
+      </div>
+
+      <div class="awards-container">
+        
+        <article class="award-card technical-corners reveal-on-scroll">
+          <div class="publication-meta-top">
+            <span class="award-badge"><i class="fas fa-trophy me-1"></i> Engineering Excellence Award</span>
+            <span class="publication-date"><i class="far fa-calendar-alt me-1"></i> Performance Recognition</span>
+          </div>
+
+          <h3 class="publication-title">
+            In-House EV Energy-Audit Data Logger &amp; Telemetry Innovation
+          </h3>
+
+          <div class="publication-authors">
+            <i class="fas fa-building me-1"></i> Moonrider.ai · Software &amp; Systems Engineering
+          </div>
+
+          <p class="publication-abstract">
+            Recognized for conceiving, architecting, and validating a full-scale IoT data logger for comprehensive EV energy auditing across high-voltage and low-voltage vehicle subsystems. Commercial market alternatives were quoted at <strong>&#8377;9,00,000 (&#8377;9 Lakhs)</strong>, but by engineering custom edge hardware, CAN synchronization, and a cloud telemetry stack in-house for just <strong>&#8377;1,00,000 (&#8377;1 Lakh)</strong>, achieved an <strong>~89% Capex reduction</strong> while meeting 100% of real-world energy-audit requirements.
+          </p>
+
+          <div class="award-highlight-box">
+            <div class="award-stat-item">
+              <span class="award-stat-num benchmark">&#8377;9,00,000</span>
+              <span class="award-stat-label">Commercial Market Cost</span>
+            </div>
+            <div class="award-stat-item">
+              <span class="award-stat-num achieved">&#8377;1,00,000</span>
+              <span class="award-stat-label">In-House Build Cost</span>
+            </div>
+            <div class="award-stat-item">
+              <span class="award-stat-num saving">~89% Savings</span>
+              <span class="award-stat-label">Cost Optimization</span>
+            </div>
+            <div class="award-stat-item">
+              <span class="award-stat-num" style="color: #a78bfa;">100%</span>
+              <span class="award-stat-label">Target Met</span>
+            </div>
+          </div>
+
+          <div class="publication-footer">
+            <div class="project-spec-stack m-0">
+              <span class="spec-badge">Cost Optimization</span>
+              <span class="spec-badge">In-House R&amp;D</span>
+              <span class="spec-badge">EV Energy Audit</span>
+              <span class="spec-badge">Edge Telemetry</span>
+              <span class="spec-badge">ESP32 &amp; CAN</span>
+              <span class="spec-badge">MQTT / Cloud Pipeline</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+
+    <!-- ========================================================
+         VOLUNTEERING & COMMUNITY SERVICE
+         ======================================================== -->
+    <section class="container py-5" id="volunteering">
+      <div class="section-title-wrap reveal-on-scroll">
+        <span class="section-pretitle">// COMMUNITY ENGAGEMENT</span>
+        <h2 class="section-title">Volunteering</h2>
+      </div>
+
+      <div class="education-grid">
+
+        <article class="education-card technical-corners reveal-on-scroll">
+          <div>
+            <div class="education-header">
+              <div class="education-logo-wrap">
+                <img src="resources/nss_logo.png" alt="NSS Logo" class="college-logo" />
+              </div>
+              <span class="education-period"><i class="far fa-calendar-alt me-1"></i> Dec 2019 – Aug 2022 · 2 yrs 9 mos</span>
+            </div>
+
+            <h3 class="education-degree">
+              Volunteer — National Service Scheme (NSS)
+            </h3>
+
+            <div class="education-institution">
+              <i class="fas fa-hands-helping"></i> Social Services
+            </div>
+
+            <p class="education-highlights">
+              As an NSS volunteer, I visited an old age home and an orphanage where I provided support and assistance to the people living there. I also took part in programs to create awareness about planting and protecting trees to help the environment. These activities helped me grow as a person and made me realize how important it is to be compassionate, responsible, and serve the community. It encouraged me to continue helping others and making a positive difference in society.
+            </p>
+          </div>
+
+          <div class="education-tags">
+            <span class="spec-badge">Community Service</span>
+            <span class="spec-badge">Old Age Home Support</span>
+            <span class="spec-badge">Orphanage Outreach</span>
+            <span class="spec-badge">Tree Plantation Drives</span>
+            <span class="spec-badge">Environmental Awareness</span>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+
+    <!-- ========================================================
+         CONTACT TERMINAL
+         ======================================================== -->
+    <section class="container py-5" id="contact">
+      <div class="section-title-wrap text-center reveal-on-scroll">
+        <span class="section-pretitle">// SECURE TRANSMISSION</span>
+        <h2 class="section-title justify-content-center">Get In Touch</h2>
+      </div>
+
+      <div class="contact-terminal technical-corners reveal-on-scroll">
+        <p class="about-summary-lead" style="max-width: 650px; margin: 0 auto 2rem;">
+          Available for vehicle software integration, ECU validation leadership, CAN/network architecture, and EV systems engineering roles.
+        </p>
+
+        <div class="contact-grid-cockpit">
+
+          <a href="mailto:Sandulokesh2001@gmail.com" class="contact-card-box">
+            <div class="contact-icon-circle">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <h4>Email Transmission</h4>
+            <p>Sandulokesh2001@gmail.com</p>
+          </a>
+
+          <a href="https://www.linkedin.com/in/lokesh-sandu-3ba5b5244/" target="_blank" rel="noopener" class="contact-card-box">
+            <div class="contact-icon-circle">
+              <i class="fab fa-linkedin-in"></i>
+            </div>
+            <h4>LinkedIn Profile</h4>
+            <p>lokesh-sandu-3ba5b5244</p>
+          </a>
+
+          <a href="https://github.com/lokeshsandu" target="_blank" rel="noopener" class="contact-card-box">
+            <div class="contact-icon-circle">
+              <i class="fab fa-github"></i>
+            </div>
+            <h4>Engineering Repos</h4>
+            <p>github.com/lokeshsandu</p>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Cockpit Footer -->
+  <footer class="cockpit-footer">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
+      <p class="mb-2 mb-md-0">&copy; 2026 Lokesh Sandu · Automotive Software Integration &amp; Validation Specialist.</p>
+      <div class="footer-social-icons">
+        <a href="https://www.linkedin.com/in/lokesh-sandu-3ba5b5244/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        <a href="https://github.com/lokeshsandu" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+        <a href="mailto:Sandulokesh2001@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll to Top HUD Button -->
+  <div class="hud-scroll-top" id="hudScrollTop" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+  </div>
+
+  <!-- Bootstrap Bundle JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+          crossorigin="anonymous"></script>
+
+  <!-- Bespoke Automotive Telemetry Script -->
+  <script src="script.js?v=2.1"></script>
+
+</body>
+</html>
