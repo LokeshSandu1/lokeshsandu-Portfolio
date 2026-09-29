@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#141c2c" />
+      <stop offset="60%" stop-color="#0c121e" />
+      <stop offset="100%" stop-color="#080b11" />
+    </linearGradient>
+    <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.6" />
+      <stop offset="100%" stop-color="#1e293b" stop-opacity="0.2" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background Base Enclosure -->
+  <rect width="400" height="400" rx="36" fill="url(#bgGrad)" stroke="#222d42" stroke-width="2" />
+
+  <!-- Subtle Precision Circuit / CAN Bus Differential Network Lines -->
+  <g stroke="#3b82f6" stroke-opacity="0.28" stroke-width="1.5" fill="none">
+    <path d="M 50,200 L 120,200 L 150,150 L 250,150 L 280,200 L 350,200" />
+    <path d="M 120,200 L 150,250 L 250,250 L 280,200" />
+    <path d="M 200,50 L 200,110" />
+    <path d="M 200,290 L 200,350" />
+    <circle cx="50" cy="200" r="4" fill="#3b82f6" />
+    <circle cx="150" cy="150" r="3.5" fill="#60a5fa" />
+    <circle cx="250" cy="150" r="3.5" fill="#3b82f6" />
+    <circle cx="150" cy="250" r="3.5" fill="#60a5fa" />
+    <circle cx="250" cy="250" r="3.5" fill="#3b82f6" />
+    <circle cx="350" cy="200" r="4" fill="#3b82f6" />
+    <circle cx="200" cy="50" r="3.5" fill="#93c5fd" />
+    <circle cx="200" cy="350" r="3.5" fill="#3b82f6" />
+  </g>
+
+  <!-- Precision Measurement Dial & Concentric Gauge -->
+  <circle cx="200" cy="200" r="115" stroke="url(#ringGrad)" stroke-width="1.5" stroke-dasharray="6 4" fill="none" />
+  <circle cx="200" cy="200" r="95" stroke="#334155" stroke-width="1" fill="none" />
+
+  <!-- Monogram LS: Executive Platinum & Pure White -->
+  <text x="200" y="215" 
+        font-family="'Plus Jakarta Sans', -apple-system, sans-serif" 
+        font-size="68" 
+        font-weight="800" 
+        fill="#ffffff" 
+        text-anchor="middle" 
+        letter-spacing="2">
+    LS
+  </text>
+  
+  <!-- Technical Subtitle -->
+  <text x="200" y="248" 
+        font-family="'JetBrains Mono', monospace" 
+        font-size="11" 
+        font-weight="600" 
+        fill="#94a3b8" 
+        text-anchor="middle" 
+        letter-spacing="4">
+    SYSTEM INTEGRATION
+  </text>
+</svg>
