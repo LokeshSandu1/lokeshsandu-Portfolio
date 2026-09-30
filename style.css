@@ -2309,3 +2309,166 @@ main > section.container.py-5 {
   }
   .data-flow-line { height: 18px; margin: -4px auto; }
 }
+
+/* ===================================================================
+   SPOTLIGHT GLOW FOR SMALL CHIPS
+   (ecu-chip · tech-spec-pill · spec-badge)
+   =================================================================== */
+
+.spotlight-chip {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    border-color 0.25s ease,
+    color 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.spotlight-chip::before {
+  content: '';
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(96, 165, 250, 0.38) 0%, transparent 65%);
+  left: var(--mouse-x, 50%);
+  top: var(--mouse-y, 50%);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  z-index: 0;
+}
+.spotlight-chip:hover::before { opacity: 1; }
+
+.spotlight-chip > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Subtle lift + border glow on hover */
+.spotlight-chip:hover {
+  border-color: rgba(59, 130, 246, 0.7) !important;
+  color: #ffffff !important;
+  background: rgba(59, 130, 246, 0.12) !important;
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.28);
+  transform: translateY(-1px);
+}
+
+/* ===================================================================
+   SKILL LIST — matching the Engineering Bullets hover feel
+   (same timing as .engineering-bullets li in Experience section)
+   =================================================================== */
+
+.skill-module .skill-module-list li {
+  position: relative;
+  transition:
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    color 0.2s ease;
+  will-change: transform;
+}
+
+/* Match the engineering-bullets hover exactly */
+.skill-module.list-visible .skill-module-list li:hover,
+.skill-module .skill-module-list li:hover {
+  transform: translateX(8px) !important;
+  color: #ffffff;
+  cursor: default;
+}
+
+/* Dot scale on hover — same rhythm as engineering bullets' ▸ */
+.skill-module .skill-module-list li::before {
+  transition:
+    transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.skill-module .skill-module-list li:hover::before {
+  background: #38bdf8;
+  transform: scale(1.8);
+  box-shadow: 0 0 8px #38bdf8;
+}
+
+/* ---------- Rotating Greeting Badge ---------- */
+.greet-text {
+  display: inline-block;
+  transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.greet-text.fade-out {
+  opacity: 0;
+  transform: translateY(-4px);
+}
+.greet-text.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===================================================================
+   ROTATING GREETING BADGE — blue theme · animated icon
+   =================================================================== */
+
+.avatar-hud-overlay {
+  /* Override any previous green theme → all blue */
+  color: #93c5fd !important;
+  background: rgba(8, 15, 28, 0.92) !important;
+  border-color: rgba(59, 130, 246, 0.45) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 7px !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45),
+              0 0 0 1px rgba(59, 130, 246, 0.12) !important;
+  padding: 4px 10px 4px 8px !important;
+}
+
+/* Icon container — base state */
+.greet-icon {
+  display: inline-block;
+  font-size: 0.78rem;
+  color: #60a5fa;
+  transform-origin: 70% 70%;        /* pivot at wrist, not center */
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+/* Hand-wave animation — only applied when data-motion="wave" */
+.greet-icon[data-motion="wave"] {
+  animation: waveHand 1.6s ease-in-out infinite;
+  color: #93c5fd;
+}
+
+@keyframes waveHand {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  15%      { transform: rotate(24deg) scale(1.1); }
+  30%      { transform: rotate(-10deg) scale(1.05); }
+  45%      { transform: rotate(24deg) scale(1.1); }
+  60%      { transform: rotate(-10deg) scale(1.05); }
+  75%      { transform: rotate(20deg) scale(1.08); }
+}
+
+/* Text — fade between words */
+.greet-text {
+  display: inline-block;
+  transition: opacity 0.32s ease, transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+  letter-spacing: 0.05em;
+}
+.greet-text.fade-out {
+  opacity: 0;
+  transform: translateY(-4px);
+}
+.greet-text.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Slightly smaller badge on mobile */
+@media (max-width: 768px) {
+  .avatar-hud-overlay {
+    padding: 3px 8px !important;
+    font-size: 0.62rem !important;
+  }
+  .greet-icon { font-size: 0.7rem; }
+}
