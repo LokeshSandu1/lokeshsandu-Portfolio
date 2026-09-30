@@ -474,12 +474,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* =========================================================
      12. 3D TILT + CARD SPOTLIGHT + SIGNAL SWEEP
+         · Big cards → tilt + spotlight + sweep
+         · Small chips → soft spotlight glow only (no tilt)
      ========================================================= */
-  document.querySelectorAll(
-    '.ecu-role-card, .skill-module, .project-deployment-card, ' +
+  const CARD_SELECTOR = '.ecu-role-card, .skill-module, .project-deployment-card, ' +
     '.education-card, .cert-card, .award-card, .publication-card, ' +
-    '.pillar-box, .contact-card-box'
-  ).forEach(card => {
+    '.pillar-box, .contact-card-box';
+
+  const CHIP_SELECTOR = '.ecu-chip, .tech-spec-pill, .spec-badge';
+
+  // ---- Big cards: full treatment ----
+  document.querySelectorAll(CARD_SELECTOR).forEach(card => {
     card.classList.add('spotlight-card', 'tilt-card');
     card.insertAdjacentHTML('beforeend', '<span class="signal-sweep" aria-hidden="true"></span>');
     card.addEventListener('mousemove', e => {
@@ -492,6 +497,16 @@ document.addEventListener('DOMContentLoaded', () => {
       card.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px)`;
     });
     card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+  });
+
+  // ---- Small chips: glow only (no tilt, no sweep) ----
+  document.querySelectorAll(CHIP_SELECTOR).forEach(chip => {
+    chip.classList.add('spotlight-chip');
+    chip.addEventListener('mousemove', e => {
+      const r = chip.getBoundingClientRect();
+      chip.style.setProperty('--mouse-x', (e.clientX - r.left) + 'px');
+      chip.style.setProperty('--mouse-y', (e.clientY - r.top) + 'px');
+    });
   });
 
   /* =========================================================
@@ -651,5 +666,41 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }, { passive: true });
   }
+
+  /* =========================================================
+     22. ROTATING GREETING BADGE — "Hello" 👋 ⇄ "Welcome" 🤝
+     ========================================================= */
+  const greetText = document.getElementById('greetText');
+  const greetIcon = document.getElementById('greetIcon');
+  if (greetText && greetIcon) {
+    const greetings = [
+      { word: 'Hello',   icon: 'fa-hand-sparkles', motion: 'wave' },
+      { word: 'Welcome', icon: 'fa-handshake',     motion: 'none' }
+    ];
+    let gIdx = 0;
+
+    // Set initial state
+    greetIcon.className = 'fas ' + greetings[0].icon + ' greet-icon';
+    greetIcon.setAttribute('data-motion', greetings[0].motion);
+
+    setInterval(() => {
+      greetText.classList.add('fade-out');
+
+      setTimeout(() => {
+        gIdx = (gIdx + 1) % greetings.length;
+        const g = greetings[gIdx];
+
+        greetText.textContent = g.word;
+        greetIcon.className = 'fas ' + g.icon + ' greet-icon';
+        greetIcon.setAttribute('data-motion', g.motion);
+
+        greetText.classList.remove('fade-out');
+        greetText.classList.add('fade-in');
+
+        setTimeout(() => greetText.classList.remove('fade-in'), 380);
+      }, 340);
+    }, 3400);   // swaps every ~3.4s
+  }
+
 
 });
