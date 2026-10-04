@@ -1,6 +1,7 @@
 /**
- * AUTOMOTIVE TELEMETRY & COCKPIT SCRIPT — v3.1 (No Boot Loader)
+ * AUTOMOTIVE TELEMETRY & COCKPIT SCRIPT — v3.3
  * Lokesh Sandu Portfolio
+ * Featuring Scroll-Hover Synchronizer for Stationary Cursor
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -9,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* =========================================================
-     HERO LETTER CINEMATIC FLY-IN (fires immediately)
+     1. HERO LETTER CINEMATIC FLY-IN
      ========================================================= */
   function startHeroIntro() {
     const heroTitle = document.querySelector('.hero-title');
@@ -35,10 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
   startHeroIntro();
 
   /* =========================================================
-     1. CAN OSCILLOSCOPE — reactive to scroll velocity
-     ========================================================= */
-    /* =========================================================
-     1. CAN OSCILLOSCOPE — brighter, scroll-reactive
+     2. CAN OSCILLOSCOPE — scroll-reactive waveform
      ========================================================= */
   const canvas = document.getElementById('canWaveformCanvas');
   let scrollVel = 1;
@@ -108,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       ctx.stroke();
 
-      // Moving "trigger" pulse markers — feel like live scope dots
+      // Moving "trigger" pulse markers
       ctx.shadowBlur = 0;
       const markerSpeed = 1.2 * scrollVel;
       const marker1 = ((step * markerSpeed) % (width + 200)) - 100;
@@ -140,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { passive: true });
 
   /* =========================================================
-     1b. CIRCUIT TRACES + DATA PACKET FLOW
+     3. CIRCUIT TRACES + DATA PACKET FLOW
      ========================================================= */
   const circuit = document.getElementById('circuitCanvas');
   if (circuit && !isMobile && !prefersReduced) {
@@ -160,7 +158,6 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('resize', cResize);
     cResize();
 
-    // Build static circuit path grid
     const NODE_COUNT = 9;
     const nodes = [];
     for (let i = 0; i < NODE_COUNT; i++) {
@@ -170,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
         connections: []
       });
     }
-    // Connect nearby nodes (Manhattan-style route)
+
     nodes.forEach((n, i) => {
       nodes.forEach((m, j) => {
         if (i >= j) return;
@@ -182,7 +179,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-    // Animated packets travelling along each connection
     const packets = [];
     nodes.forEach(n => {
       n.connections.forEach(c => {
@@ -249,7 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       });
 
-      // Node pads (small squares — like PCB vias)
+      // Node pads
       nodes.forEach(n => {
         cctx.fillStyle = 'rgba(59, 130, 246, 0.55)';
         cctx.fillRect(n.x - 2.5, n.y - 2.5, 5, 5);
@@ -258,11 +254,10 @@ document.addEventListener('DOMContentLoaded', () => {
         cctx.strokeRect(n.x - 4, n.y - 4, 8, 8);
       });
 
-      // Animated data packets
+      // Animated packets
       packets.forEach(p => {
         p.t += p.speed;
         if (p.t >= 1) {
-          // Respawn on a random connection
           const nn = nodes[Math.floor(Math.random() * nodes.length)];
           if (nn.connections.length) {
             const cc = nn.connections[Math.floor(Math.random() * nn.connections.length)];
@@ -291,7 +286,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* =========================================================
-     2. TYPEWRITER SUBTITLE
+     4. TYPEWRITER SUBTITLE
      ========================================================= */
   const typedTarget = document.getElementById('typingTarget');
   if (typedTarget) {
@@ -317,117 +312,324 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* =========================================================
-     3. METRIC COUNT-UP
+     5. HOVER-UNDER-CURSOR TRACKER (for stationary mouse during scroll)
      ========================================================= */
-  const metricNumbers = document.querySelectorAll('.metric-number[data-target]');
-  let metricsCounted = false;
-  function countUpMetrics() {
-    if (metricsCounted) return;
-    metricNumbers.forEach(el => {
-      const target = parseInt(el.getAttribute('data-target'), 10);
-      const suffix = el.getAttribute('data-suffix') || '';
-      let cur = 0;
-      const inc = Math.ceil(target / 50);
-      const t = setInterval(() => {
-        cur += inc;
-        if (cur >= target) { cur = target; clearInterval(t); el.classList.add('bounce'); }
-        el.textContent = cur + suffix;
-      }, 30);
-    });
-    metricsCounted = true;
+  let lastMouseX = -1;
+  let lastMouseY = -1;
+  let activeCard = null;
+  let activeChip = null;
+  let activeBtn = null;
+  let scrollTimeout = null;
+  let scrollTicking = false;
+  let dot = null;
+
+  const CARD_SELECTOR = '.ecu-role-card, .skill-module, .project-deployment-card, ' +
+    '.education-card, .cert-card, .award-card, .publication-card, ' +
+    '.pillar-box, .contact-card-box';
+
+  const CHIP_SELECTOR = '.ecu-chip, .tech-spec-pill, .spec-badge';
+
+  const BTN_SELECTOR = '.btn-automotive-primary, .btn-automotive-secondary, ' +
+    '.publication-doi-btn, .cert-link-btn, .btn-resume-nav, .hud-scroll-top, .nav-links-desktop a';
+
+  const INTERACTIVE_TARGETS = 'a, button, .ecu-chip, .spec-badge, .tech-spec-pill, .skill-module, .pillar-box, .cert-card, .award-card, .project-deployment-card, .ecu-role-card, .education-card, .publication-card, .contact-card-box, .hud-scroll-top';
+
+  window.addEventListener('mousemove', e => {
+    lastMouseX = e.clientX;
+    lastMouseY = e.clientY;
+
+    // Real mouse movement: remove synthetic is-hovered so native :hover seamlessly takes over
+    if (activeCard) {
+      activeCard.classList.remove('is-hovered');
+      activeCard = null;
+    }
+    if (activeChip) {
+      activeChip.classList.remove('is-hovered');
+      activeChip = null;
+    }
+    if (activeBtn) {
+      activeBtn.classList.remove('is-hovered');
+      activeBtn = null;
+    }
+  }, { passive: true });
+
+  window.addEventListener('mouseleave', () => {
+    lastMouseX = -1;
+    lastMouseY = -1;
+    clearScrollHover();
+  });
+
+  function clearScrollHover() {
+    if (activeCard) {
+      activeCard.classList.remove('is-hovered');
+      activeCard.style.transform = '';
+      activeCard = null;
+    }
+    if (activeChip) {
+      activeChip.classList.remove('is-hovered');
+      activeChip = null;
+    }
+    if (activeBtn) {
+      activeBtn.classList.remove('is-hovered');
+      activeBtn = null;
+    }
   }
-  const metricsSection = document.querySelector('.metrics-banner');
-  if (metricsSection) {
-    new IntersectionObserver((e, o) => {
-      if (e[0].isIntersecting) { countUpMetrics(); o.unobserve(metricsSection); }
-    }, { threshold: 0.3 }).observe(metricsSection);
+
+  function updateHoverUnderCursor() {
+    if (lastMouseX < 0 || lastMouseY < 0) return;
+
+    const el = document.elementFromPoint(lastMouseX, lastMouseY);
+    if (!el) {
+      clearScrollHover();
+      if (dot) dot.classList.remove('cur-hover');
+      return;
+    }
+
+    // Custom cursor dot hover state
+    if (dot) {
+      dot.classList.toggle('cur-hover', !!el.closest(INTERACTIVE_TARGETS));
+    }
+
+    // Card hover & 3D tilt
+    const targetCard = el.closest(CARD_SELECTOR);
+    if (targetCard) {
+      if (activeCard && activeCard !== targetCard) {
+        activeCard.classList.remove('is-hovered');
+        activeCard.style.transform = '';
+      }
+      targetCard.classList.add('is-hovered');
+      activeCard = targetCard;
+
+      if (!isMobile && !prefersReduced) {
+        const r = targetCard.getBoundingClientRect();
+        const x = lastMouseX - r.left;
+        const y = lastMouseY - r.top;
+        targetCard.style.setProperty('--mouse-x', x + 'px');
+        targetCard.style.setProperty('--mouse-y', y + 'px');
+        const ry = ((x / r.width) - 0.5) * 6;
+        const rx = ((y / r.height) - 0.5) * -6;
+        targetCard.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px)`;
+      }
+    } else if (activeCard) {
+      activeCard.classList.remove('is-hovered');
+      activeCard.style.transform = '';
+      activeCard = null;
+    }
+
+    // Chip spotlight & hover
+    const targetChip = el.closest(CHIP_SELECTOR);
+    if (targetChip) {
+      if (activeChip && activeChip !== targetChip) {
+        activeChip.classList.remove('is-hovered');
+      }
+      targetChip.classList.add('is-hovered');
+      activeChip = targetChip;
+
+      if (!isMobile && !prefersReduced) {
+        const r = targetChip.getBoundingClientRect();
+        targetChip.style.setProperty('--mouse-x', (lastMouseX - r.left) + 'px');
+        targetChip.style.setProperty('--mouse-y', (lastMouseY - r.top) + 'px');
+      }
+    } else if (activeChip) {
+      activeChip.classList.remove('is-hovered');
+      activeChip = null;
+    }
+
+    // Button / link hover
+    const targetBtn = el.closest(BTN_SELECTOR);
+    if (targetBtn) {
+      if (activeBtn && activeBtn !== targetBtn) {
+        activeBtn.classList.remove('is-hovered');
+      }
+      targetBtn.classList.add('is-hovered');
+      activeBtn = targetBtn;
+    } else if (activeBtn) {
+      activeBtn.classList.remove('is-hovered');
+      activeBtn = null;
+    }
+  }
+
+  // Listen for scrollend to immediately update hover once scroll settle
+  if ('onscrollend' in window) {
+    window.addEventListener('scrollend', updateHoverUnderCursor, { passive: true });
   }
 
   /* =========================================================
-     4. HEADER + SCROLL TOP + ACTIVE NAV
+     6. UNIFIED HIGH-PERFORMANCE SCROLL SYSTEM
+        - Header sticky & shadow
+        - Scroll-to-top HUD button visibility
+        - Scroll reading progress bar
+        - Active navigation link detection
+        - Live telemetry HUD indicators
+        - Hero section parallax
+        - Real-time stationary cursor hover update
      ========================================================= */
   const header = document.querySelector('header.cockpit-nav');
   const scrollTopBtn = document.getElementById('hudScrollTop');
-  window.addEventListener('scroll', () => {
+  const heroSection = document.querySelector('.hero-cockpit');
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links-desktop a[href^="#"]');
+
+  // Scroll progress bar
+  const scrollProg = document.createElement('div');
+  scrollProg.className = 'scroll-progress';
+  document.body.appendChild(scrollProg);
+
+  // Live telemetry HUD element setup
+  let hudSec = null;
+  let hudScr = null;
+  let hudTime = null;
+
+  if (!isMobile && !prefersReduced) {
+    const hud = document.createElement('div');
+    hud.className = 'telemetry-hud';
+    hud.innerHTML = `
+      <div class="hud-row"><span class="hud-tag">SECTION</span><span class="hud-val" data-hud="sec">Hero</span></div>
+      <div class="hud-row"><span class="hud-tag">PROGRESS</span><span class="hud-val" data-hud="scr">0%</span></div>
+      <div class="hud-row"><span class="hud-tag">READING</span><span class="hud-val" data-hud="time">00:00</span></div>
+    `;
+    document.body.appendChild(hud);
+
+    hudSec = hud.querySelector('[data-hud="sec"]');
+    hudScr = hud.querySelector('[data-hud="scr"]');
+    hudTime = hud.querySelector('[data-hud="time"]');
+
+    const startTime = Date.now();
+    setInterval(() => {
+      const sec = Math.floor((Date.now() - startTime) / 1000);
+      const m = String(Math.floor(sec / 60)).padStart(2, '0');
+      const s = String(sec % 60).padStart(2, '0');
+      if (hudTime) hudTime.textContent = m + ':' + s;
+    }, 1000);
+  }
+
+  function handleUnifiedScroll() {
     const y = window.scrollY;
+    const docH = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = docH > 0 ? Math.min(100, Math.max(0, (y / docH) * 100)) : 0;
+
+    // Header sticky styling
     if (header) header.classList.toggle('scrolled', y > 40);
+
+    // Scroll to top button visibility
     if (scrollTopBtn) scrollTopBtn.classList.toggle('visible', y > 350);
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-links-desktop a[href^="#"]');
-    let curId = '';
+
+    // Progress bar width
+    scrollProg.style.width = progress + '%';
+
+    // Active section tracking
+    let curId = 'hero';
     sections.forEach(sec => {
-      const top = sec.offsetTop - 120, h = sec.offsetHeight;
+      const top = sec.offsetTop - 140;
+      const h = sec.offsetHeight;
       if (y >= top && y < top + h) curId = sec.getAttribute('id');
     });
-    navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + curId));
-  }, { passive: true });
 
-  if (scrollTopBtn) scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + curId));
+
+    // Live Telemetry HUD values
+    if (hudScr) hudScr.textContent = Math.round(progress) + '%';
+    if (hudSec) hudSec.textContent = curId.charAt(0).toUpperCase() + curId.slice(1);
+
+    // Hero parallax fade
+    if (heroSection && !prefersReduced && y < 800) {
+      heroSection.style.setProperty('--hero-p', Math.min(1, y / 800));
+    }
+
+    // Keep hover state synchronized under stationary cursor on scroll
+    if (!scrollTicking) {
+      requestAnimationFrame(() => {
+        updateHoverUnderCursor();
+        scrollTicking = false;
+      });
+      scrollTicking = true;
+    }
+
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(updateHoverUnderCursor, 60);
+  }
+
+  window.addEventListener('scroll', handleUnifiedScroll, { passive: true });
+  handleUnifiedScroll();
+
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  }
 
   /* =========================================================
-     5. MOBILE MENU
+     7. MOBILE NAVIGATION DRAWER
      ========================================================= */
-  const mt = document.getElementById('mobileNavToggle');
-  const nd = document.getElementById('navDrawer');
-  if (mt && nd) {
-    mt.addEventListener('click', () => {
-      nd.classList.toggle('active');
+  const mobileToggle = document.getElementById('mobileNavToggle');
+  const navDrawer = document.getElementById('navDrawer');
+  if (mobileToggle && navDrawer) {
+    mobileToggle.addEventListener('click', () => {
+      navDrawer.classList.toggle('active');
       document.body.classList.toggle('menu-open');
     });
-    nd.querySelectorAll('a').forEach(l => l.addEventListener('click', () => {
-      nd.classList.remove('active');
+    navDrawer.querySelectorAll('a').forEach(l => l.addEventListener('click', () => {
+      navDrawer.classList.remove('active');
       document.body.classList.remove('menu-open');
     }));
   }
 
   /* =========================================================
-     6. REVEAL ON SCROLL
+     8. REVEAL ON SCROLL & STAGGER
      ========================================================= */
+  document.querySelectorAll('.reveal-stagger').forEach(group => {
+    group.querySelectorAll('.reveal-on-scroll').forEach((k, i) => {
+      if (i % 5 === 1) k.classList.add('reveal-scale');
+      else if (i % 5 === 2) k.classList.add('reveal-left');
+      else if (i % 5 === 3) k.classList.add('reveal-right');
+      else if (i % 5 === 4) k.classList.add('reveal-rotate');
+    });
+  });
+
   const revealEls = document.querySelectorAll('.reveal-on-scroll');
   if ('IntersectionObserver' in window) {
-    const ro = new IntersectionObserver((entries, obs) => {
+    const revealObserver = new IntersectionObserver((entries, obs) => {
       entries.forEach(en => {
-        if (en.isIntersecting) { en.target.classList.add('visible'); obs.unobserve(en.target); }
+        if (en.isIntersecting) {
+          en.target.classList.add('visible');
+          obs.unobserve(en.target);
+        }
       });
     }, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
-    revealEls.forEach(el => ro.observe(el));
-  } else revealEls.forEach(el => el.classList.add('visible'));
+    revealEls.forEach(el => revealObserver.observe(el));
+  } else {
+    revealEls.forEach(el => el.classList.add('visible'));
+  }
 
   /* =========================================================
-     7. HERO CHIPS
+     9. HERO CHIPS ENTRANCE
      ========================================================= */
   document.querySelectorAll('.hero-telemetry-tags .ecu-chip').forEach((chip, i) => {
     setTimeout(() => chip.classList.add('chip-visible'), 150 + i * 70);
   });
 
   /* =========================================================
-     8. CONTACT CARD STAGGER
+     10. CONTACT CARD STAGGER ENTRANCE
      ========================================================= */
   const contactTerminal = document.querySelector('.contact-grid-cockpit');
-  if (contactTerminal && 'IntersectionObserver' in window) {
-    new IntersectionObserver((entries, obs) => {
-      entries.forEach(en => {
-        if (en.isIntersecting) { contactTerminal.classList.add('stagger-active'); obs.unobserve(contactTerminal); }
-      });
-    }, { threshold: 0.1 }).observe(contactTerminal);
-  } else if (contactTerminal) contactTerminal.classList.add('stagger-active');
+  if (contactTerminal) {
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver((entries, obs) => {
+        entries.forEach(en => {
+          if (en.isIntersecting) {
+            contactTerminal.classList.add('stagger-active');
+            obs.unobserve(contactTerminal);
+          }
+        });
+      }, { threshold: 0.1 }).observe(contactTerminal);
+    } else {
+      contactTerminal.classList.add('stagger-active');
+    }
+  }
 
   /* =========================================================
-     9. SCROLL PROGRESS BAR
-     ========================================================= */
-  const sp = document.createElement('div');
-  sp.className = 'scroll-progress';
-  document.body.appendChild(sp);
-  window.addEventListener('scroll', () => {
-    const docH = document.documentElement.scrollHeight - window.innerHeight;
-    sp.style.width = Math.min(100, Math.max(0, (window.scrollY / docH) * 100)) + '%';
-  }, { passive: true });
-
-    /* =========================================================
-     10. CUSTOM CURSOR — minimal dot only (no ring)
+     11. CUSTOM CURSOR (Minimal dot with smooth hover tracking)
      ========================================================= */
   if (!isMobile && !prefersReduced) {
-    const dot = document.createElement('div');
+    dot = document.createElement('div');
     dot.className = 'cur-dot';
     document.body.appendChild(dot);
     document.body.classList.add('custom-cursor');
@@ -436,15 +638,21 @@ document.addEventListener('DOMContentLoaded', () => {
       dot.style.transform = `translate(${e.clientX}px, ${e.clientY}px) translate(-50%,-50%)`;
     });
 
-    document.querySelectorAll('a, button, .ecu-chip, .spec-badge, .tech-spec-pill, .skill-module, .pillar-box, .cert-card, .award-card, .project-deployment-card, .ecu-role-card, .education-card, .publication-card, .contact-card-box, .hud-scroll-top')
-      .forEach(el => {
-        el.addEventListener('mouseenter', () => dot.classList.add('cur-hover'));
-        el.addEventListener('mouseleave', () => dot.classList.remove('cur-hover'));
-      });
+    document.addEventListener('mouseover', e => {
+      if (e.target.closest(INTERACTIVE_TARGETS)) {
+        dot.classList.add('cur-hover');
+      }
+    });
+
+    document.addEventListener('mouseout', e => {
+      if (e.target.closest(INTERACTIVE_TARGETS)) {
+        dot.classList.remove('cur-hover');
+      }
+    });
   }
 
   /* =========================================================
-     11. SECTION TITLE SPLIT + GLITCH
+     12. SECTION TITLE SPLIT + GLITCH ANIMATION
      ========================================================= */
   document.querySelectorAll('.section-title').forEach(el => {
     const text = el.textContent.trim();
@@ -460,6 +668,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     el.appendChild(wrap);
   });
+
   const splitObs = new IntersectionObserver((entries, obs) => {
     entries.forEach(en => {
       if (en.isIntersecting) {
@@ -473,44 +682,49 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.section-title').forEach(el => splitObs.observe(el));
 
   /* =========================================================
-     12. 3D TILT + CARD SPOTLIGHT + SIGNAL SWEEP
-         · Big cards → tilt + spotlight + sweep
-         · Small chips → soft spotlight glow only (no tilt)
+     13. 3D TILT + CARD SPOTLIGHT + SIGNAL SWEEP
      ========================================================= */
-  const CARD_SELECTOR = '.ecu-role-card, .skill-module, .project-deployment-card, ' +
-    '.education-card, .cert-card, .award-card, .publication-card, ' +
-    '.pillar-box, .contact-card-box';
-
-  const CHIP_SELECTOR = '.ecu-chip, .tech-spec-pill, .spec-badge';
-
-  // ---- Big cards: full treatment ----
-  document.querySelectorAll(CARD_SELECTOR).forEach(card => {
-    card.classList.add('spotlight-card', 'tilt-card');
-    card.insertAdjacentHTML('beforeend', '<span class="signal-sweep" aria-hidden="true"></span>');
-    card.addEventListener('mousemove', e => {
-      const r = card.getBoundingClientRect();
-      const x = e.clientX - r.left, y = e.clientY - r.top;
-      card.style.setProperty('--mouse-x', x + 'px');
-      card.style.setProperty('--mouse-y', y + 'px');
-      const ry = ((x / r.width) - 0.5) * 6;
-      const rx = ((y / r.height) - 0.5) * -6;
-      card.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px)`;
+  if (!isMobile && !prefersReduced) {
+    document.querySelectorAll(CARD_SELECTOR).forEach(card => {
+      card.classList.add('spotlight-card', 'tilt-card');
+      card.insertAdjacentHTML('beforeend', '<span class="signal-sweep" aria-hidden="true"></span>');
+      card.addEventListener('mousemove', e => {
+        const r = card.getBoundingClientRect();
+        const x = e.clientX - r.left;
+        const y = e.clientY - r.top;
+        card.style.setProperty('--mouse-x', x + 'px');
+        card.style.setProperty('--mouse-y', y + 'px');
+        const ry = ((x / r.width) - 0.5) * 6;
+        const rx = ((y / r.height) - 0.5) * -6;
+        card.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+        card.classList.remove('is-hovered');
+        if (activeCard === card) activeCard = null;
+      });
     });
-    card.addEventListener('mouseleave', () => { card.style.transform = ''; });
-  });
 
-  // ---- Small chips: glow only (no tilt, no sweep) ----
-  document.querySelectorAll(CHIP_SELECTOR).forEach(chip => {
-    chip.classList.add('spotlight-chip');
-    chip.addEventListener('mousemove', e => {
-      const r = chip.getBoundingClientRect();
-      chip.style.setProperty('--mouse-x', (e.clientX - r.left) + 'px');
-      chip.style.setProperty('--mouse-y', (e.clientY - r.top) + 'px');
+    document.querySelectorAll(CHIP_SELECTOR).forEach(chip => {
+      chip.classList.add('spotlight-chip');
+      chip.addEventListener('mousemove', e => {
+        const r = chip.getBoundingClientRect();
+        chip.style.setProperty('--mouse-x', (e.clientX - r.left) + 'px');
+        chip.style.setProperty('--mouse-y', (e.clientY - r.top) + 'px');
+      });
+      chip.addEventListener('mouseleave', () => {
+        chip.classList.remove('is-hovered');
+        if (activeChip === chip) activeChip = null;
+      });
     });
-  });
+  } else {
+    document.querySelectorAll(CARD_SELECTOR).forEach(card => {
+      card.classList.add('spotlight-card');
+    });
+  }
 
   /* =========================================================
-     13. MAGNETIC BUTTONS + RIPPLE
+     14. MAGNETIC BUTTONS + RIPPLE EFFECT
      ========================================================= */
   document.querySelectorAll(
     '.btn-automotive-primary, .btn-automotive-secondary, ' +
@@ -522,7 +736,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const y = e.clientY - r.top - r.height / 2;
       btn.style.transform = `translate(${x * 0.14}px, ${y * 0.22}px)`;
     });
-    btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
+    btn.addEventListener('mouseleave', () => {
+      btn.style.transform = '';
+      btn.classList.remove('is-hovered');
+      if (activeBtn === btn) activeBtn = null;
+    });
     btn.addEventListener('click', e => {
       const r = btn.getBoundingClientRect();
       const sz = Math.max(r.width, r.height);
@@ -537,9 +755,8 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* =========================================================
-     14. HERO PARTICLES
+     15. HERO PARTICLES
      ========================================================= */
-  const heroSection = document.querySelector('.hero-cockpit');
   if (heroSection && !isMobile && !prefersReduced) {
     setInterval(() => {
       const p = document.createElement('div');
@@ -555,35 +772,29 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* =========================================================
-     15. EXPERIENCE TIMELINE
+     16. EXPERIENCE TIMELINE ACTIVE STATE
      ========================================================= */
   const expTrack = document.querySelector('.experience-track');
-  if (expTrack) {
-    new IntersectionObserver((en) => {
-      en.forEach(e => { if (e.isIntersecting) expTrack.classList.add('timeline-active'); });
+  if (expTrack && 'IntersectionObserver' in window) {
+    new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) expTrack.classList.add('timeline-active'); });
     }, { threshold: 0.1 }).observe(expTrack);
   }
 
   /* =========================================================
-     16. SKILL LIST STAGGER
+     17. SKILL LIST STAGGER
      ========================================================= */
-  const skillObs = new IntersectionObserver((entries, obs) => {
-    entries.forEach(en => {
-      if (en.isIntersecting) { en.target.classList.add('list-visible'); obs.unobserve(en.target); }
-    });
-  }, { threshold: 0.3 });
-  document.querySelectorAll('.skill-module').forEach(m => skillObs.observe(m));
-
-  /* =========================================================
-     17. REVEAL VARIANT AUTO-ASSIGN
-     ========================================================= */
-  document.querySelectorAll('.reveal-stagger').forEach(group => {
-    group.querySelectorAll('.reveal-on-scroll').forEach((k, i) => {
-      if (i % 4 === 1) k.classList.add('reveal-scale');
-      else if (i % 4 === 2) k.classList.add('reveal-left');
-      else if (i % 4 === 3) k.classList.add('reveal-rotate');
-    });
-  });
+  if ('IntersectionObserver' in window) {
+    const skillObs = new IntersectionObserver((entries, obs) => {
+      entries.forEach(en => {
+        if (en.isIntersecting) {
+          en.target.classList.add('list-visible');
+          obs.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    document.querySelectorAll('.skill-module').forEach(m => skillObs.observe(m));
+  }
 
   /* =========================================================
      18. MAGNETIC 3D AVATAR — follows mouse
@@ -601,53 +812,13 @@ document.addEventListener('DOMContentLoaded', () => {
     heroSection.addEventListener('mouseleave', () => { avatarFrame.style.transform = ''; });
   }
 
-    /* =========================================================
-     19. LIVE TELEMETRY HUD — portfolio-relevant metrics
-     ========================================================= */
-  if (!isMobile && !prefersReduced) {
-    const hud = document.createElement('div');
-    hud.className = 'telemetry-hud';
-    hud.innerHTML = `
-      <div class="hud-row"><span class="hud-tag">SECTION</span><span class="hud-val" data-hud="sec">hero</span></div>
-      <div class="hud-row"><span class="hud-tag">PROGRESS</span><span class="hud-val" data-hud="scr">0%</span></div>
-      <div class="hud-row"><span class="hud-tag">READING</span><span class="hud-val" data-hud="time">0s</span></div>
-    `;
-    document.body.appendChild(hud);
-
-    const hudSec  = hud.querySelector('[data-hud="sec"]');
-    const hudScr  = hud.querySelector('[data-hud="scr"]');
-    const hudTime = hud.querySelector('[data-hud="time"]');
-
-    const startTime = Date.now();
-    setInterval(() => {
-      const sec = Math.floor((Date.now() - startTime) / 1000);
-      const m = String(Math.floor(sec / 60)).padStart(2, '0');
-      const s = String(sec % 60).padStart(2, '0');
-      hudTime.textContent = m + ':' + s;
-    }, 1000);
-
-    window.addEventListener('scroll', () => {
-      const docH = document.documentElement.scrollHeight - window.innerHeight;
-      hudScr.textContent = Math.round((window.scrollY / docH) * 100) + '%';
-
-      const sections = document.querySelectorAll('section[id]');
-      let cur = 'hero';
-      sections.forEach(sec => {
-        const top = sec.offsetTop - 120, h = sec.offsetHeight;
-        if (window.scrollY >= top && window.scrollY < top + h) cur = sec.getAttribute('id');
-      });
-      // Capitalize first letter for readability
-      hudSec.textContent = cur.charAt(0).toUpperCase() + cur.slice(1);
-    }, { passive: true });
-  }
-
   /* =========================================================
-     20. DATA FLOW LINES between sections
+     19. DATA FLOW LINES BETWEEN SECTIONS
      ========================================================= */
   if (!prefersReduced) {
-    const sections = document.querySelectorAll('main > section');
-    sections.forEach((sec, i) => {
-      if (i === sections.length - 1) return;
+    const pageSections = document.querySelectorAll('main > section');
+    pageSections.forEach((sec, i) => {
+      if (i === pageSections.length - 1) return;
       const line = document.createElement('div');
       line.className = 'data-flow-line';
       line.innerHTML = '<span></span><span></span><span></span>';
@@ -656,19 +827,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* =========================================================
-     21. HERO PARALLAX FADE on scroll
-     ========================================================= */
-  if (heroSection && !prefersReduced) {
-    window.addEventListener('scroll', () => {
-      const y = window.scrollY;
-      if (y < 800) {
-        heroSection.style.setProperty('--hero-p', Math.min(1, y / 800));
-      }
-    }, { passive: true });
-  }
-
-  /* =========================================================
-     22. ROTATING GREETING BADGE — "Hello" 👋 ⇄ "Welcome" 🤝
+     20. ROTATING GREETING BADGE — "Hello" 👋 ⇄ "Welcome" 🤝
      ========================================================= */
   const greetText = document.getElementById('greetText');
   const greetIcon = document.getElementById('greetIcon');
@@ -679,7 +838,6 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
     let gIdx = 0;
 
-    // Set initial state
     greetIcon.className = 'fas ' + greetings[0].icon + ' greet-icon';
     greetIcon.setAttribute('data-motion', greetings[0].motion);
 
@@ -699,8 +857,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         setTimeout(() => greetText.classList.remove('fade-in'), 380);
       }, 340);
-    }, 3400);   // swaps every ~3.4s
+    }, 3400);
   }
-
 
 });
